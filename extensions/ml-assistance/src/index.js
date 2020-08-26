@@ -1,6 +1,3 @@
-import MeasurementComparisonTable from './components/MeasurementComparisonTable';
-import studyList from './components/StudyList';
-import LayoutButton from './components/LayoutButton';
 import tableList from './components/TableList';
 
 export default {
