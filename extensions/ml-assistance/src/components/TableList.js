@@ -1,5 +1,6 @@
 // TODO: Make reloading a promise based approach
 // TODO: Add nnUNet
+// Create Dicom Series from nifi image
 
 import React from 'react';
 import { State } from 'react-powerplug';
@@ -51,12 +52,14 @@ const getCurrentUIDs = () => {
 };
 
 const process_image = (
+  algorithm,
   PatientID,
   StudyInstanceUID,
   SeriesInstanceUID,
   SOPInstanceUID
 ) => {
-  let image_processing_server_URL = 'http://localhost:5000/series/';
+  let image_processing_server_URL =
+    'http://localhost:5000/' + algorithm + '/series/';
 
   let orthanc_identifier = generate_orthanc_identifier_study(
     PatientID,
@@ -82,7 +85,7 @@ const tableList = () => {
     <State
       initial={{
         selectedIndex: null,
-        listItems: [{ label: 'Gaussian Filter' }, { label: 'nnUNet' }],
+        listItems: [{ label: 'Gaussian-Filter' }, { label: 'nnUNet' }],
       }}
     >
       {({ state, setState }) => (
@@ -95,6 +98,7 @@ const tableList = () => {
                 itemIndex={index}
                 onItemClick={() =>
                   process_image(
+                    item.label,
                     PatientID,
                     StudyInstanceUID,
                     SeriesInstanceUID,
